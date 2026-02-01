@@ -6,7 +6,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 
 public final class CashPlus extends JavaPlugin {
 
-    private static Economy econ;
+    private static Economy economy;
 
     @Override
     public void onEnable() {
@@ -17,6 +17,7 @@ public final class CashPlus extends JavaPlugin {
             return;
         }
         this.getCommand("withdraw").setExecutor(new Commands());
+        this.getCommand("deposit").setExecutor(new Commands());
         getLogger().info("--------------------");
         getLogger().info("");
         getLogger().info("Cash+ Enabled!");
@@ -44,12 +45,12 @@ public final class CashPlus extends JavaPlugin {
         if (rsp == null) {
             return false;
         }
-        econ = rsp.getProvider();
+        economy = rsp.getProvider();
         return true;
     }
 
     public static Economy getEconomy() {
-        return econ;
+        return economy;
     }
 
 }

@@ -21,7 +21,7 @@ public final class CashPlus extends JavaPlugin {
         // Plugin shutdown logic
         getLogger().info("--------------------");
         getLogger().info("");
-        getLogger().info("Cash+ Disabled!");
+        getLogger().info("Cash+ Disabled!"); //a
         getLogger().info("");
         getLogger().info("Author: Gizmo0o");
         getLogger().info("");

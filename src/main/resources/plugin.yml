@@ -8,3 +8,5 @@ website: gizmo0odev.github.io
 commands:
   withdraw:
     permission: cashplus.withdraw
+  deposit:
+    permission: cashplus.deposit

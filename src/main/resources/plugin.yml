@@ -1,0 +1,7 @@
+name: CashPlus
+version: '1.0'
+main: io.github.gizmo0odev.cashPlus.CashPlus
+api-version: '1.21'
+authors: [ Gizmo0o ]
+description: Physical currency plugin.
+website: gizmo0odev.github.io

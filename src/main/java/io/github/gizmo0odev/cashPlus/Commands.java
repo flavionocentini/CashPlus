@@ -18,7 +18,7 @@ import static org.bukkit.Bukkit.getLogger;
 
 public class Commands implements CommandExecutor {
 
-    String prefix = "" + ChatColor.GRAY + ChatColor.BOLD + "[" + ChatColor.GREEN + ChatColor.BOLD + "Cash+" + ChatColor.GRAY + ChatColor.BOLD + "] ";
+    String prefix = Utils.prefix;
     Material cashMaterial = Utils.cashMaterial;
     String currencySymbol = "$";
     String currencyName = "Cash";

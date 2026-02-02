@@ -10,3 +10,5 @@ commands:
     permission: cashplus.withdraw
   deposit:
     permission: cashplus.deposit
+  cashplus:
+    permission: cashplus.admin

@@ -1,0 +1,6 @@
+prefix: "§7§l[§a§lCash+§7§l] "
+cash-material: "RAW_GOLD"
+currency-symbol: "$"
+currency-name: "§e§lCash"
+cash-description-line-1: "§7Deposit into your balance with /deposit"
+cash-description-line-2: "§7Use /cashtutorial for a tutorial"

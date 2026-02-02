@@ -10,9 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class Utils {
 
-    public static String prefix = "" + ChatColor.GRAY + ChatColor.BOLD + "[" + ChatColor.GREEN + ChatColor.BOLD + "Cash+" + ChatColor.GRAY + ChatColor.BOLD + "] ";
-
-    public static Material cashMaterial = Material.RAW_GOLD;
+    public static Material cashMaterial;
 
     public static ChatColor success = ChatColor.GREEN;
     public static ChatColor error = ChatColor.RED;
@@ -59,6 +57,10 @@ public class Utils {
                 }
             }
         }
+    }
+
+    public static void init(CashPlus plugin) {
+        cashMaterial = CashPlus.cashMaterial;
     }
 
 }

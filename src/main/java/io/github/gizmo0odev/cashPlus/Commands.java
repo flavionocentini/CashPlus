@@ -18,20 +18,26 @@ import static org.bukkit.Bukkit.getLogger;
 
 public class Commands implements CommandExecutor {
 
-    String prefix = Utils.prefix;
-    Material cashMaterial = Utils.cashMaterial;
-    String currencySymbol = "$";
-    String currencyName = "Cash";
-    ChatColor currencyColor = ChatColor.YELLOW;
-    String cashDescLine1 = "Deposit into your balance with /deposit";
-    String cashDescLine2 = "Use /cashtutorial for a tutorial";
-    ChatColor cashDescColor = ChatColor.GRAY;
+    String prefix = CashPlus.prefix;
+    Material cashMaterial = CashPlus.cashMaterial;
+    String currencySymbol;
+    String currencyName;
+    String cashDescLine1;
+    String cashDescLine2;
+
+    public Commands() {
+        currencySymbol = CashPlus.getPluginConfig().getString("currency-symbol");
+        currencyName = CashPlus.getPluginConfig().getString("currency-name");
+        cashDescLine1 = CashPlus.getPluginConfig().getString("cash-description-line-1");
+        cashDescLine2 = CashPlus.getPluginConfig().getString("cash-description-line-2");
+    }
 
     ChatColor success = Utils.success;
     ChatColor error = Utils.error;
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        // withdraw
         if (cmd.getName().equalsIgnoreCase("withdraw")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
@@ -49,9 +55,9 @@ public class Commands implements CommandExecutor {
 
                                 ItemStack cash = new ItemStack(cashMaterial);
                                 ItemMeta cashMeta = cash.getItemMeta();
-                                cashMeta.setDisplayName(currencyColor + "" + ChatColor.BOLD + currencyName);
+                                cashMeta.setDisplayName(currencyName);
                                 cashMeta.addEnchant(Enchantment.UNBREAKING, 1, true);
-                                cashMeta.setLore(Arrays.asList(cashDescColor + cashDescLine1, cashDescColor + cashDescLine2));
+                                cashMeta.setLore(Arrays.asList(cashDescLine1, cashDescLine2));
                                 cashMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                                 cash.setItemMeta(cashMeta);
                                 cash.setAmount(amount);
@@ -72,10 +78,14 @@ public class Commands implements CommandExecutor {
                         player.sendMessage(prefix + error + "/withdraw [amount]");
                         Utils.playError(player);
                     }
+                } else {
+                    player.sendMessage(prefix + error + "You don't have permission to use that command!");
+                    Utils.playError(player);
                 }
             } else {
                 getLogger().severe("[Cash+] This command can only be executed by a player!");
             }
+            // deposit
         } else if (cmd.getName().equalsIgnoreCase("deposit")) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
@@ -111,9 +121,58 @@ public class Commands implements CommandExecutor {
                         player.sendMessage(prefix + error + "/withdraw [amount]");
                         Utils.playError(player);
                     }
+                } else {
+                    player.sendMessage(prefix + error + "You don't have permission to use that command!");
+                    Utils.playError(player);
                 }
             } else {
                 getLogger().severe("[Cash+] This command can only be executed by a player!");
+            }
+            // cashplus admin command
+        } else if (cmd.getName().equalsIgnoreCase("cashplus")) {
+            if (args.length >= 1) {
+                if (args[0].equalsIgnoreCase("reload")) {
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        if (player.hasPermission("cashplus.admin")) {
+                            CashPlus.getInstance().reloadConfig();
+                            player.sendMessage(prefix + success + "Config reloaded!");
+                            Utils.playSuccess(player);
+                        } else {
+                            player.sendMessage(prefix + error + "You don't have permission to use that command!");
+                            Utils.playError(player);
+                        }
+                    } else {
+                        CashPlus.getInstance().reloadConfig();
+                        getLogger().info("[Chat+] Config reloaded!");
+                    }
+                } else {
+                    if (sender instanceof Player) {
+                        Player player = (Player) sender;
+                        if (player.hasPermission("cashplus.admin")) {
+                            player.sendMessage(prefix + error + "Incorrect command usage!");
+                            Utils.playError(player);
+                        } else {
+                            player.sendMessage(prefix + error + "You don't have permission to use that command!");
+                            Utils.playError(player);
+                        }
+                    } else {
+                        getLogger().severe("[Cash+] Incorrect command usage!");
+                    }
+                }
+            } else {
+                if (sender instanceof Player) {
+                    Player player = (Player) sender;
+                    if (player.hasPermission("cashplus.admin")) {
+                        player.sendMessage(prefix + error + "Incorrect command usage!");
+                        Utils.playError(player);
+                    } else {
+                        player.sendMessage(prefix + error + "You don't have permission to use that command!");
+                        Utils.playError(player);
+                    }
+                } else {
+                    getLogger().severe("[Cash+] Incorrect command usage!");
+                }
             }
         }
         return false;
